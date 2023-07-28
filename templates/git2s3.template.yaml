@@ -77,7 +77,7 @@ Parameters:
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
     ConstraintDescription: Quick Start S3 bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen
       (-).
-    Default: aws-quickstart
+    Default: aws-ia-us-east-1
     Description: S3 bucket name for Quick Start assets. It can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).
     Type: String
   QSS3BucketRegion:
@@ -87,7 +87,7 @@ Parameters:
   QSS3KeyPrefix:
     AllowedPattern: ^[0-9a-zA-Z-/]*$
     ConstraintDescription: Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slashes (/).
-    Default: quickstart-git2s3/
+    Default: cfn-ps-git2s3/
     Description: Key prefix for the Quick Start assets S3 bucket. A key prefix is similar to a directory name that enables you to store similar data under the same directory in an S3 bucket. It can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slashes (/).
     Type: String
   VPCId:
