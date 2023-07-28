@@ -296,13 +296,9 @@ Resources:
           ignore_checks:
             - EIAMPolicyActionWildcard
             - EIAMPolicyWildcardResource
-            - EIAMManagedPolicyOnlyGroup
-            - EIAMRoleResourceWildardPassRole
           ignore_reasons:
             - EIAMPolicyActionWildcard: Intent assumed for initial migration.
             - EIAMPolicyWildcardResource: Intent assumed for initial migration.
-            - EIAMManagedPolicyOnlyGroup: Intent assumed for initial migration.
-            - EIAMManagedPolicyOnlyGroup: Intent assumed for initial migration.
     Properties:
       Description: AWS KWS key to encrypt and decrypt SSH keys stored in S3.
       KeyPolicy:
@@ -372,13 +368,9 @@ Resources:
           ignore_checks:
             - EIAMPolicyActionWildcard
             - EIAMPolicyWildcardResource
-            - EIAMManagedPolicyOnlyGroup
-            - EIAMRoleResourceWildardPassRole
           ignore_reasons:
             - EIAMPolicyActionWildcard: Intent assumed for initial migration.
             - EIAMPolicyWildcardResource: Intent assumed for initial migration.
-            - EIAMManagedPolicyOnlyGroup: Intent assumed for initial migration.
-            - EIAMManagedPolicyOnlyGroup: Intent assumed for initial migration.
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -455,13 +447,9 @@ Resources:
           ignore_checks:
             - EIAMPolicyActionWildcard
             - EIAMPolicyWildcardResource
-            - EIAMManagedPolicyOnlyGroup
-            - EIAMRoleResourceWildardPassRole
           ignore_reasons:
             - EIAMPolicyActionWildcard: Intent assumed for initial migration.
             - EIAMPolicyWildcardResource: Intent assumed for initial migration.
-            - EIAMManagedPolicyOnlyGroup: Intent assumed for initial migration.
-            - EIAMManagedPolicyOnlyGroup: Intent assumed for initial migration.
     Properties:
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
@@ -551,19 +539,15 @@ Resources:
 
   CodeBuildBasePolicy:
     Type: 'AWS::IAM::ManagedPolicy'
-    Metadata:
-      cfn-lint:
-        config:
-          ignore_checks:
-            - EIAMPolicyActionWildcard
-            - EIAMPolicyWildcardResource
-            - EIAMManagedPolicyOnlyGroup
-            - EIAMRoleResourceWildardPassRole
-          ignore_reasons:
-            - EIAMPolicyActionWildcard: Intent assumed for initial migration.
-            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
-            - EIAMManagedPolicyOnlyGroup: Intent assumed for initial migration.
-            - EIAMManagedPolicyOnlyGroup: Intent assumed for initial migration.
+#    Metadata:
+#      cfn-lint:
+#        config:
+#          ignore_checks:
+#            - EIAMPolicyActionWildcard
+#            - EIAMPolicyWildcardResource
+#          ignore_reasons:
+#            - EIAMPolicyActionWildcard: Intent assumed for initial migration.
+#            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
     Properties:
         Description: Policy with base permissions for CodeBuild.
         Path: /
@@ -614,15 +598,9 @@ Resources:
       cfn-lint:
         config:
           ignore_checks:
-            - EIAMPolicyActionWildcard
             - EIAMPolicyWildcardResource
-            - EIAMManagedPolicyOnlyGroup
-            - EIAMRoleResourceWildardPassRole
           ignore_reasons:
-            - EIAMPolicyActionWildcard: Intent assumed for initial migration.
             - EIAMPolicyWildcardResource: Intent assumed for initial migration.
-            - EIAMManagedPolicyOnlyGroup: Intent assumed for initial migration.
-            - EIAMManagedPolicyOnlyGroup: Intent assumed for initial migration.
     Properties:
         Description: Policy with permissions enabling CodeBuild to work with endpoints.
         Path: /
@@ -652,13 +630,9 @@ Resources:
           ignore_checks:
             - EIAMPolicyActionWildcard
             - EIAMPolicyWildcardResource
-            - EIAMManagedPolicyOnlyGroup
-            - EIAMRoleResourceWildardPassRole
           ignore_reasons:
             - EIAMPolicyActionWildcard: Intent assumed for initial migration.
             - EIAMPolicyWildcardResource: Intent assumed for initial migration.
-            - EIAMManagedPolicyOnlyGroup: Intent assumed for initial migration.
-            - EIAMManagedPolicyOnlyGroup: Intent assumed for initial migration.
     Properties:
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
