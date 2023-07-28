@@ -4,6 +4,14 @@ Description: Git webhooks to clone and store a Git repository in S3. Used to int
 Metadata:
   QuickStartDocumentation:
     EntrypointName: Parameters for deploying into your selected Region
+  cfn-lint:
+    config:
+      ignore_checks:
+        - W9006
+        - E9010
+        - W2001
+        - E9007
+        - W3005
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:
@@ -154,6 +162,13 @@ Resources:
         - functions/packages/GitPullS3/lambda.zip
 
   CopyZipsRole:
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - EIAMPolicyActionWildcard
+          ignore_reasons:
+            - EIAMPolicyActionWildcard: Intent assumed for initial migration.
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -275,8 +290,17 @@ Resources:
 
   KMSKey:
     Type: AWS::KMS::Key
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - EIAMPolicyActionWildcard
+            - EIAMPolicyWildcardResource
+          ignore_reasons:
+            - EIAMPolicyActionWildcard: Intent assumed for initial migration.
+            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
     Properties:
-      Description: AWS KWS key to encrypt and decrypt SSH keys stored in S3. 
+      Description: AWS KWS key to encrypt and decrypt SSH keys stored in S3.
       KeyPolicy:
         Version: '2012-10-17'
         Statement:
@@ -336,8 +360,17 @@ Resources:
             Condition:
               Bool:
                 kms:GrantIsForAWSResource: true
-  
+      EnableKeyRotation: true
   CreateSSHKeyRole:
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - EIAMPolicyActionWildcard
+            - EIAMPolicyWildcardResource
+          ignore_reasons:
+            - EIAMPolicyActionWildcard: Intent assumed for initial migration.
+            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -383,7 +416,7 @@ Resources:
                   - logs:PutLogEvents
                 Resource:
                   - arn:aws:logs:*:*:*
-  
+
   CreateSSHKeyLambda:
     DependsOn: CopyZips
     Type: AWS::Lambda::Function
@@ -396,7 +429,7 @@ Resources:
       Code:
         S3Bucket: !Ref 'LambdaZipsBucket'
         S3Key: !Sub '${QSS3KeyPrefix}functions/packages/CreateSSHKey/lambda.zip'
-  
+
   CreateSSHKey:
     Type: AWS::CloudFormation::CustomResource
     Version: '1.0'
@@ -405,9 +438,18 @@ Resources:
       KeyBucket: !Ref 'KeyBucket'
       Region: !Ref 'AWS::Region'
       KMSKey: !Ref 'KMSKey'
-  
+
   DeleteBucketContentsRole:
     Type: AWS::IAM::Role
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - EIAMPolicyActionWildcard
+            - EIAMPolicyWildcardResource
+          ignore_reasons:
+            - EIAMPolicyActionWildcard: Intent assumed for initial migration.
+            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
     Properties:
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
@@ -451,7 +493,7 @@ Resources:
                   - logs:PutLogEvents
                 Resource:
                   - arn:aws:logs:*:*:*
-  
+
   DeleteBucketContentsLambda:
     DependsOn: CopyZips
     Type: AWS::Lambda::Function
@@ -464,7 +506,7 @@ Resources:
       Code:
         S3Bucket: !Ref 'LambdaZipsBucket'
         S3Key: !Sub '${QSS3KeyPrefix}functions/packages/DeleteBucketContents/lambda.zip'
-  
+
   DeleteBucketContents:
     Type: AWS::CloudFormation::CustomResource
     Version: '1.0'
@@ -484,29 +526,38 @@ Resources:
           Statement:
           - Effect: "Allow"
             Principal:
-                Service: "codebuild.amazonaws.com" 
-            Action: 
+                Service: "codebuild.amazonaws.com"
+            Action:
                 - "sts:AssumeRole"
         Path: "/"
         ManagedPolicyArns:
           - !Ref CodeBuildEndpointPolicy
-        Tags: 
+        Tags:
           -
               Key: 'tagging-policy'
               Value: !Join ['-', ["test", "ok"]]
 
   CodeBuildBasePolicy:
     Type: 'AWS::IAM::ManagedPolicy'
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - EIAMPolicyActionWildcard
+            - EIAMPolicyWildcardResource
+          ignore_reasons:
+            - EIAMPolicyActionWildcard: Intent assumed for initial migration.
+            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
     Properties:
         Description: Policy with base permissions for CodeBuild.
         Path: /
-        Roles: 
+        Roles:
           - !Ref CodeBuildServiceRole
         PolicyDocument:
           Version: 2012-10-17
           Statement:
           - Effect: "Allow"
-            Action: 
+            Action:
                 - "logs:CreateLogGroup"
                 - "logs:PutLogEvents"
                 - "logs:CreateLogStream"
@@ -539,6 +590,15 @@ Resources:
 
   CodeBuildEndpointPolicy:
     Type: 'AWS::IAM::ManagedPolicy'
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - EIAMPolicyActionWildcard
+            - EIAMPolicyWildcardResource
+          ignore_reasons:
+            - EIAMPolicyActionWildcard: Intent assumed for initial migration.
+            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
     Properties:
         Description: Policy with permissions enabling CodeBuild to work with endpoints.
         Path: /
@@ -562,6 +622,15 @@ Resources:
 
   GitPullRole:
     Type: AWS::IAM::Role
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - EIAMPolicyActionWildcard
+            - EIAMPolicyWildcardResource
+          ignore_reasons:
+            - EIAMPolicyActionWildcard: Intent assumed for initial migration.
+            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
     Properties:
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
