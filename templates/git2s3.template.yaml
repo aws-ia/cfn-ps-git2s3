@@ -539,15 +539,15 @@ Resources:
 
   CodeBuildBasePolicy:
     Type: 'AWS::IAM::ManagedPolicy'
-    Metadata:
-      cfn-lint:
-        config:
-          ignore_checks:
-            - EIAMPolicyActionWildcard
-            - EIAMPolicyWildcardResource
-          ignore_reasons:
-            - EIAMPolicyActionWildcard: Intent assumed for initial migration.
-            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
+#    Metadata:
+#      cfn-lint:
+#        config:
+#          ignore_checks:
+#            - EIAMPolicyActionWildcard
+#            - EIAMPolicyWildcardResource
+#          ignore_reasons:
+#            - EIAMPolicyActionWildcard: Intent assumed for initial migration.
+#            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
     Properties:
         Description: Policy with base permissions for CodeBuild.
         Path: /
@@ -582,8 +582,12 @@ Resources:
             Action:
                 - 'kms:Encrypt'
                 - 'kms:Decrypt'
-                - 'kms:ReEncrypt*'
-                - 'kms:GenerateDataKey*'
+                - 'kms:ReEncryptTo'
+                - 'kms:ReEncryptFrom'
+                - "kms:GenerateDataKeyPair"
+                - "kms:GenerateDataKeyWithoutPlaintext"
+                - "kms:GenerateDataKey"
+                - "kms:GenerateDataKeyPairWithoutPlaintext"
                 - 'kms:DescribeKey'
             Resource:
                 - !GetAtt KMSKey.Arn
@@ -594,10 +598,8 @@ Resources:
       cfn-lint:
         config:
           ignore_checks:
-            - EIAMPolicyActionWildcard
             - EIAMPolicyWildcardResource
           ignore_reasons:
-            - EIAMPolicyActionWildcard: Intent assumed for initial migration.
             - EIAMPolicyWildcardResource: Intent assumed for initial migration.
     Properties:
         Description: Policy with permissions enabling CodeBuild to work with endpoints.
