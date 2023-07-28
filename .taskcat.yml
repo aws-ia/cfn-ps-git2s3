@@ -1,5 +1,5 @@
 project:
-  name: quickstart-git2s3
+  name: cfn-ps-git2s3
   owner: jmmccon@amazon.com
   package_lambda: true
   lambda_source_path: functions/source
