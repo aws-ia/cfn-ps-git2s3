@@ -147,6 +147,8 @@ Resources:
   LambdaZipsBucket:
     Type: AWS::S3::Bucket
     Properties:
+      VersioningConfiguration:
+        Status: Enabled
       Tags: []
 
   CopyZips:
@@ -276,6 +278,8 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       Tags: []
+      VersioningConfiguration:
+        Status: Enabled
 
   OutputBucket:
     Type: AWS::S3::Bucket
@@ -751,7 +755,7 @@ Resources:
                     - mv ./enc_key.pem ~/.ssh/id_rsa
                     - ls ~/.ssh/
                     - echo "Setting SSH config profile"
-                    - | 
+                    - |
                       cat > ~/.ssh/config <<EOF
                       Host *
                         AddKeysToAgent yes
@@ -766,7 +770,7 @@ Resources:
                     - |
                       if [ "$exclude_git" = "True" ]; then
                         zip -r $outputbucketkey ./ -x '*.git*'
-                      else 
+                      else
                         zip -r $outputbucketkey ./
                       fi
                     - ls -alh
