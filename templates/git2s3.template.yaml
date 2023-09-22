@@ -147,6 +147,7 @@ Resources:
   LambdaZipsBucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
     Properties:
       BucketEncryption:
         ServerSideEncryptionConfiguration:
@@ -287,6 +288,7 @@ Resources:
   KeyBucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
     Properties:
       Tags: []
       BucketEncryption:
