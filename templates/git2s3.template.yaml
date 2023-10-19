@@ -115,7 +115,7 @@ Parameters:
     Type: String
     Default: ''
   ExcludeGit:
-    Description: Choose False to omit the .git directory from the Git repository .zip file.
+    Description: Choose True to omit the .git directory from the Git repository .zip file.
     Type: String
     Default: 'True'
     AllowedValues: ['True', 'False']
