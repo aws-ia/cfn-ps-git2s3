@@ -115,7 +115,7 @@ Parameters:
     Type: String
     Default: ''
   ExcludeGit:
-    Description: Choose False to omit the .git directory from the Git repository .zip file.
+    Description: Choose True to omit the .git directory from the Git repository .zip file.
     Type: String
     Default: 'True'
     AllowedValues: ['True', 'False']
@@ -146,6 +146,8 @@ Conditions:
 Resources:
   LambdaZipsBucket:
     Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
     Properties:
       BucketEncryption:
         ServerSideEncryptionConfiguration:
@@ -220,7 +222,7 @@ Resources:
     Properties:
       Description: Copies objects from a source S3 bucket to a destination.
       Handler: index.handler
-      Runtime: python3.7
+      Runtime: python3.9
       Role: !GetAtt 'CopyZipsRole.Arn'
       Timeout: 240
       Code:
@@ -285,6 +287,8 @@ Resources:
 
   KeyBucket:
     Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
     Properties:
       Tags: []
       BucketEncryption:
